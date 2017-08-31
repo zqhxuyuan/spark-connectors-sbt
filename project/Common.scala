@@ -25,7 +25,8 @@ object Common {
       // Resolver.mavenLocal has issues - hence the duplication
       "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository",
       "Tongdun Maven" at "http://maven.fraudmetrix.cn/nexus/content/groups/public/",
-      "Aliyun Maven" at "http://maven.aliyun.com/nexus/content/groups/public/"
+      "Aliyun Maven" at "http://maven.aliyun.com/nexus/content/groups/public/",
+      "bintray-spark-packages" at "https://dl.bintray.com/spark-packages/maven/"
 
       //"Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
       //"Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",

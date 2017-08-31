@@ -29,7 +29,8 @@ object Dependencies {
   val apiDependencies         : Seq[ModuleID] = sparkDependency()
 
   val coreDependencies       : Seq[ModuleID] = sparkDependency() ++ Seq(
-    "com.typesafe" % "config" % "1.3.1"
+    "com.typesafe" % "config" % "1.3.1",
+    "mrpowers" % "spark-daria" % "2.2.0_0.10.0"
   )
 
   val jdbcDependencies        : Seq[ModuleID] = sparkDependency() ++ Seq(
@@ -71,6 +72,17 @@ object Dependencies {
     //"org.elasticsearch" % "elasticsearch-hadoop" % "5.5.2"
   )
 
+  val jobserverDependencies   : Seq[ModuleID] = sparkDependency() ++ Seq(
+
+  )
+
+  val neo4jDependencies       : Seq[ModuleID] = sparkDependency() ++ Seq(
+    "neo4j-contrib" % "neo4j-spark-connector" % "2.1.0-M4"
+  )
+
+  val orientdbDependencies    : Seq[ModuleID] = sparkDependency() ++ Seq(
+
+  )
 
   val webDependencies         : Seq[ModuleID] = sparkDependency() ++ Seq(
     "com.typesafe.play" %% "play" % playVersion,
