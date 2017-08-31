@@ -1,0 +1,11 @@
+
+# spark connectors with sbt
+
+- [x] jdbc
+- [x] cassandra
+- [x] mongodb
+- [ ] codis/redis
+- [ ] hive
+- [ ] hdfs/file
+- [ ] hbase
+- [ ] elasticsearch
