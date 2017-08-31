@@ -1,19 +1,17 @@
 package com.zqh.spark.connectors.cassandra
 
-import com.zqh.spark.connectors.SparkWriter
-import org.apache.spark.SparkConf
+import com.zqh.spark.connectors.{ConnectorsWriteConf, SparkWriter}
 import org.apache.spark.sql.DataFrame
-import CassandraConfig._
 
 /**
   * Created by zhengqh on 17/8/29.
   */
-class CassandraWriter(conf: SparkConf) extends SparkWriter{
+class CassandraWriter(conf: ConnectorsWriteConf) extends SparkWriter{
 
   override def write(df: DataFrame) = {
-    val keyspace = conf.getCassandraWriteConf("keyspace")
-    val table = conf.getCassandraWriteConf("table")
-    val writeMode = conf.getCassandraWriteConf("mode", "append")
+    val keyspace = conf.getWriteConf("keyspace")
+    val table = conf.getWriteConf("table")
+    val writeMode = conf.getWriteConf("mode", "append")
 
     var cassandraOptions = Map("table" -> table, "keyspace" -> keyspace)
     if(writeMode.toLowerCase.equals("overwrite")) {
@@ -24,5 +22,9 @@ class CassandraWriter(conf: SparkConf) extends SparkWriter{
       .mode(writeMode)
       .options(cassandraOptions)
       .save()
+  }
+
+  override def close(): Unit = {
+    println("close cassandra writer")
   }
 }

@@ -1,8 +1,7 @@
 package com.zqh.spark.connectors.cassandra
 
-import com.zqh.spark.connectors.cassandra.CassandraConfig._
+import com.zqh.spark.connectors.{ConnectorsWriteConf, ConnectorsReadConf}
 import com.zqh.spark.connectors.test.TestSparkConnectors
-import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -11,19 +10,21 @@ import org.apache.spark.sql.SparkSession
 object TestCassandraReaderWriter {
 
   def main(args: Array[String]) {
-    val conf = new SparkConf().
-      setCassandraReadConf("keyspace", "mykeyspace").
-      setCassandraReadConf("table", "users").
-      setCassandraReadConf("host", "192.168.6.70").
-      setCassandraWriteConf("keyspace", "mykeyspace").
-      setCassandraWriteConf("table", "users2").
-      setCassandraWriteConf("host", "192.168.6.70").
-      setCassandraWriteConf("mode", "overwrite")
+    val conf = new ConnectorsReadConf("cassandra").
+      setReadConf("keyspace", "mykeyspace").
+      setReadConf("table", "users").
+      setReadConf("host", "192.168.6.70")
+
+    val writeConf = new ConnectorsWriteConf("cassandra").
+      setWriteConf("keyspace", "mykeyspace").
+      setWriteConf("table", "users2").
+      setWriteConf("host", "192.168.6.70").
+      setWriteConf("mode", "overwrite")
 
     val spark = SparkSession.builder().master("local").config(conf).getOrCreate()
 
     val reader = new CassandraReader(conf)
-    val writer = new CassandraWriter(conf)
+    val writer = new CassandraWriter(writeConf)
 
     val connector = new TestSparkConnectors(reader, writer, spark)
     connector.runSparkJob()

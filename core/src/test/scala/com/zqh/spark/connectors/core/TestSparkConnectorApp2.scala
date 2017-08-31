@@ -1,6 +1,5 @@
 package com.zqh.spark.connectors.core
 
-import com.zqh.spark.connectors.TestSparkWriter
 import com.zqh.spark.connectors.test.{TestSparkWriter, TestSparkReader}
 import org.apache.spark.sql.SparkSession
 

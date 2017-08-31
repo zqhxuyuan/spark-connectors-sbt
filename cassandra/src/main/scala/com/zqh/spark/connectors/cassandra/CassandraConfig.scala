@@ -6,6 +6,7 @@ import org.apache.spark.SparkConf
 /**
   * Created by zhengqh on 17/8/30.
   */
+@deprecated
 class CassandraConfig(val conf: SparkConf) {
   val writeConnector = WriteConnectorType("cassandra")
   val readConnector = ReadConnectorType("cassandra")
@@ -36,6 +37,7 @@ class CassandraConfig(val conf: SparkConf) {
   def getCassandraReadConf(key: String, default: String) = conf.get(readPrefix + key, default)
 }
 
+@deprecated
 object CassandraConfig {
   implicit def cassandraConfig(conf: SparkConf) = new CassandraConfig(conf)
 }
