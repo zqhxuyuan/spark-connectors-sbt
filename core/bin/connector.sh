@@ -1,0 +1,2 @@
+bin/connector \
+--conf

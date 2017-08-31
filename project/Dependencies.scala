@@ -28,7 +28,9 @@ object Dependencies {
   //=======================各个子模块的依赖========================
   val apiDependencies         : Seq[ModuleID] = sparkDependency()
 
-  val sparkDependencies       : Seq[ModuleID] = sparkDependency()
+  val coreDependencies       : Seq[ModuleID] = sparkDependency() ++ Seq(
+    "com.typesafe" % "config" % "1.3.1"
+  )
 
   val jdbcDependencies        : Seq[ModuleID] = sparkDependency() ++ Seq(
     "mysql" % "mysql-connector-java" % "5.1.38" % "compile"

@@ -8,7 +8,7 @@ import Dependencies._
 
 lazy val api = (project in file("api")).settings(Common.settings: _*).settings(libraryDependencies ++= apiDependencies)
 
-lazy val core = (project in file("core")).settings(Common.settings: _*).settings(libraryDependencies ++= sparkDependencies).dependsOn(api)
+lazy val core = (project in file("core")).settings(Common.settings: _*).settings(libraryDependencies ++= coreDependencies).dependsOn(api)
 
 lazy val jdbc = (project in file("jdbc")).settings(Common.settings: _*).settings(libraryDependencies ++= jdbcDependencies).dependsOn(api)
 
