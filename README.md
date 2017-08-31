@@ -46,6 +46,8 @@ class ReadJdbc(conf: ConnectorsReadConf) extends SparkReader{
 
 ## How to run
 
+参考: <http://centerqi.github.io/java/2015/11/30/spark-scala-application-config>
+
 ```
 bin/spark-submit --driver-class-path /Users/zhengqh/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar \
 --jars /Users/zhengqh/spark-connectors-sbt/jdbc/target/scala-2.11/jdbc-assembly-0.0.1.jar \
