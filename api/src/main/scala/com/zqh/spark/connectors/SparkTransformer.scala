@@ -10,3 +10,7 @@ trait SparkTransformer {
   def transform(df: DataFrame) : DataFrame
 
 }
+
+class NothingTransformer extends SparkTransformer {
+  override def transform(df: DataFrame) = df
+}

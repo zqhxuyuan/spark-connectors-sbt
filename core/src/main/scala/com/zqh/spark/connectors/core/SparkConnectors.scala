@@ -1,6 +1,6 @@
 package com.zqh.spark.connectors.core
 
-import com.zqh.spark.connectors.{SparkReader, SparkWriter}
+import com.zqh.spark.connectors.{SparkTransformer, SparkReader, SparkWriter}
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -8,6 +8,7 @@ import org.apache.spark.sql.SparkSession
   */
 class SparkConnectors(reader: SparkReader,
                       writer: SparkWriter,
+                      transformer: SparkTransformer,
                       spark: SparkSession) {
   def runSparkJob(): Unit = {
     // 初始化
@@ -16,10 +17,11 @@ class SparkConnectors(reader: SparkReader,
     // 读取源
     val source = reader.read(spark)
 
-    //val transform = transformer.transform(source)
+    // 转换操作
+    val transform = transformer.transform(source)
 
     // 写入目标
-    writer.write(source)
+    writer.write(transform)
 
     // 关闭
     writer.close()

@@ -9,7 +9,7 @@ import org.apache.spark.sql.SparkSession
 /**
   * Created by zhengqh on 17/8/30.
   */
-object TestSparkPipelineApp {
+object TestSparkParallelPipelineApp {
 
   def main(args: Array[String]) {
     // jdbc read and jdbc writer
@@ -32,13 +32,12 @@ object TestSparkPipelineApp {
     val jdbcReader = new JdbcReader(conf)
     val jdbcWriter = new JdbcWriter(conf)
 
-    // pipe line test
-    // demo reader + jdbc reader -> demo writer + jdbc writer
-    val pipeline = new TestSparkPipelines(
+    // parallel pipe line test
+    val ppipeline = new TestSparkParallelPipeline(
       List(reader, jdbcReader),
       List(writer, jdbcWriter),
       spark
     )
-    pipeline.runSparkJob()
+    ppipeline.runSparkJob()
   }
 }

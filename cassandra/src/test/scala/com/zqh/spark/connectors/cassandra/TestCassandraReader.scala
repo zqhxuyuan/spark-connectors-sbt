@@ -1,6 +1,6 @@
 package com.zqh.spark.connectors.cassandra
 
-import com.zqh.spark.connectors.ConnectorsReadConf
+import com.zqh.spark.connectors.{NothingTransformer, ConnectorsReadConf}
 import com.zqh.spark.connectors.test.{TestSparkConnectors, TestSparkWriter}
 import org.apache.spark.sql.SparkSession
 
@@ -17,10 +17,11 @@ object TestCassandraReader {
 
     val reader = new CassandraReader(conf)
     val writer = new TestSparkWriter()
+    val transformer = new NothingTransformer
 
     val spark = SparkSession.builder().master("local").config(conf).getOrCreate()
 
-    val connector = new TestSparkConnectors(reader, writer, spark)
+    val connector = new TestSparkConnectors(reader, writer, transformer, spark)
     connector.runSparkJob()
   }
 }

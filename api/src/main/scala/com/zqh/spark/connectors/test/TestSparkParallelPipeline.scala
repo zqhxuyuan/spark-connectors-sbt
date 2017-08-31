@@ -1,18 +1,21 @@
-package com.zqh.spark.connectors.core
+package com.zqh.spark.connectors.test
 
 import java.util.concurrent.Executors
 
 import com.zqh.spark.connectors.{SparkReader, SparkWriter}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
-import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
-import scala.util.{Success, Failure}
+import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.util.{Failure, Success}
 
 /**
   * Created by zhengqh on 17/8/30.
+  *
+  * TODO 这个类在core中存在, 但是也放在api中, 是为了让其他模块的测试类可以运行.
+  * 其他模块只依赖api, 不依赖core. 如果依赖core就太重了. 但是不依赖core, 就没办法运行
   */
-class SparkParallelPipeline(readers: List[SparkReader], writers: List[SparkWriter], spark: SparkSession) {
+class TestSparkParallelPipeline(readers: List[SparkReader], writers: List[SparkWriter], spark: SparkSession) {
 
     def runSparkJob(): Unit = {
       val pool = Executors.newFixedThreadPool(5)
