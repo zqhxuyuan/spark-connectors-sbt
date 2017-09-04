@@ -8,6 +8,7 @@ object Constant {
   final val packageName = "com.zqh.spark.connectors."
   final val READER = "reader"
   final val WRITER = "writer"
+  final val FORMAT = "format"
 
   val typeClassMap = Map(
     "reader.jdbc" -> "ReadJdbc",

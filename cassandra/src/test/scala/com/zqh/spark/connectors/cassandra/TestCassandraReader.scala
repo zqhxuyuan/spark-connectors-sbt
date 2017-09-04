@@ -1,7 +1,7 @@
 package com.zqh.spark.connectors.cassandra
 
 import com.zqh.spark.connectors.{NothingTransformer, ConnectorsReadConf}
-import com.zqh.spark.connectors.test.{TestSparkConnectors, TestSparkWriter}
+import com.zqh.spark.connectors.test.{TestSparkConnectors, ConsoleSparkWriter}
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -16,7 +16,7 @@ object TestCassandraReader {
       setReadConf("host", "192.168.6.70")
 
     val reader = new CassandraReader(conf)
-    val writer = new TestSparkWriter()
+    val writer = new ConsoleSparkWriter()
     val transformer = new NothingTransformer
 
     val spark = SparkSession.builder().master("local").config(conf).getOrCreate()

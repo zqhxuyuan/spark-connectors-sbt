@@ -84,6 +84,10 @@ object Dependencies {
 
   )
 
+  val kafkaDependencies    : Seq[ModuleID] = sparkDependency() ++ Seq(
+
+  )
+
   val webDependencies         : Seq[ModuleID] = sparkDependency() ++ Seq(
     "com.typesafe.play" %% "play" % playVersion,
     "com.typesafe.play" %% "play-jdbc" % playVersion,

@@ -1,7 +1,7 @@
 package com.zqh.spark.connectors.mongo
 
 import com.zqh.spark.connectors.{NothingTransformer, ConnectorsReadConf}
-import com.zqh.spark.connectors.test.{TestSparkConnectors, TestSparkWriter}
+import com.zqh.spark.connectors.test.{TestSparkConnectors, ConsoleSparkWriter}
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -18,7 +18,7 @@ object TestMongoReader {
     val spark = SparkSession.builder().master("local").config(readConf).getOrCreate()
 
     val reader = new MongoReader(readConf)
-    val writer = new TestSparkWriter()
+    val writer = new ConsoleSparkWriter()
     val transformer = new NothingTransformer
 
     val connector = new TestSparkConnectors(reader, writer, transformer, spark)

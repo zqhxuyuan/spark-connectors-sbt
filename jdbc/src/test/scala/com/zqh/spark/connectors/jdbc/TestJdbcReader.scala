@@ -1,7 +1,7 @@
 package com.zqh.spark.connectors.jdbc
 
 import com.zqh.spark.connectors.NothingTransformer
-import com.zqh.spark.connectors.test.{TestSparkConnectors, TestSparkWriter}
+import com.zqh.spark.connectors.test.{TestSparkConnectors, ConsoleSparkWriter}
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import com.zqh.spark.connectors.jdbc.JdbcConfig._
@@ -21,7 +21,7 @@ object TestJdbcReader {
     val spark = SparkSession.builder().master("local").config(conf).getOrCreate()
 
     val reader = new JdbcReader(conf)
-    val writer = new TestSparkWriter()
+    val writer = new ConsoleSparkWriter()
     val transformer = new NothingTransformer
 
     val connector = new TestSparkConnectors(reader, writer, transformer, spark)

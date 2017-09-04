@@ -34,6 +34,8 @@ lazy val neo4j = (project in file("neo4j")).settings(Common.settings: _*).settin
 
 lazy val orientdb = (project in file("orientdb")).settings(Common.settings: _*).settings(libraryDependencies ++= orientdbDependencies).dependsOn(api)
 
+lazy val kafka = (project in file("kafka")).settings(Common.settings: _*).settings(libraryDependencies ++= kafkaDependencies).dependsOn(api)
+
 lazy val root = (project in file(".")).settings(Common.settings: _*).
   aggregate(api, core, jdbc, hdfs, hive, cassandra, hbase, mongodb, codis, redis, elasticsearch)
 

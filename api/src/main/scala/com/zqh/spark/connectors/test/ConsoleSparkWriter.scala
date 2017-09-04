@@ -6,9 +6,9 @@ import org.apache.spark.sql.DataFrame
 /**
   * Created by zhengqh on 17/8/29.
   */
-class TestSparkWriter extends SparkWriter{
+class ConsoleSparkWriter extends SparkWriter{
 
   override def write(df: DataFrame) = {
-    df.collect().foreach(println)
+    df.take(100).foreach(println)
   }
 }

@@ -1,7 +1,7 @@
 package com.zqh.spark.connectors.core
 
-import com.zqh.spark.connectors.test.TestSparkWriter
-import com.zqh.spark.connectors.test.{TestSparkWriter, TestSparkReader}
+import com.zqh.spark.connectors.test.ConsoleSparkWriter
+import com.zqh.spark.connectors.test.{ConsoleSparkWriter, TestSparkReader}
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -11,7 +11,7 @@ object TestSparkConnectorApp {
 
   def main(args: Array[String]) {
     val reader = new TestSparkReader()
-    val writer = new TestSparkWriter()
+    val writer = new ConsoleSparkWriter()
 
     val spark = SparkSession.builder().master("local").getOrCreate()
 

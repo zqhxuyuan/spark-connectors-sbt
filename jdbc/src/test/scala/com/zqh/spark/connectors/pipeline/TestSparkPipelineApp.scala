@@ -2,7 +2,7 @@ package com.zqh.spark.connectors.pipeline
 
 import com.zqh.spark.connectors.jdbc.JdbcConfig._
 import com.zqh.spark.connectors.jdbc.{JdbcReader, JdbcWriter}
-import com.zqh.spark.connectors.test.{TestSparkParallelPipeline, TestSparkPipelines, TestSparkReader2, TestSparkWriter}
+import com.zqh.spark.connectors.test.{TestSparkParallelPipeline, TestSparkPipelines, TestSparkReader2, ConsoleSparkWriter}
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
@@ -27,7 +27,7 @@ object TestSparkPipelineApp {
 
     // demo reader and demo writer
     val reader = new TestSparkReader2()
-    val writer = new TestSparkWriter()
+    val writer = new ConsoleSparkWriter()
 
     val jdbcReader = new JdbcReader(conf)
     val jdbcWriter = new JdbcWriter(conf)

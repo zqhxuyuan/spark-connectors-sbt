@@ -8,7 +8,8 @@ import org.apache.spark.sql.SparkSession
 /**
   * Created by zhengqh on 17/8/31.
   *
-  bin/spark-submit --driver-class-path /Users/zhengqh/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar \
+  bin/spark-submit --master local \
+  --driver-class-path /Users/zhengqh/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar \
   --jars /Users/zhengqh/spark-connectors-sbt/jdbc/target/scala-2.11/jdbc-assembly-0.0.1.jar \
   --class com.zqh.spark.connectors.ConnectorClient \
   --files /Users/zhengqh/spark-connectors-sbt/core/src/main/resources/application.conf \
@@ -23,10 +24,10 @@ object ConnectorClient {
     val writerConfigs = connectors("writers")
 
     val readerConnectors = readerConfigs.map(reader => {
-      val readerType = reader("type")
+      val readerType = reader(Constant.FORMAT)
       println("reader: " + readerType)
       val conf = new ConnectorsReadConf(readerType)
-      reader.filterKeys(!_.equals("type")).foreach(kv => {
+      reader.filterKeys(!_.equals(Constant.FORMAT)).foreach(kv => {
         println(kv._1 + ": " + kv._2)
         conf.setReadConf(kv._1, kv._2)
       })
@@ -37,10 +38,10 @@ object ConnectorClient {
     })
 
     val writerConnectors = writerConfigs.map(writer => {
-      val writerType = writer("type")
+      val writerType = writer(Constant.FORMAT)
       println("writer: " + writerType)
       val conf = new ConnectorsWriteConf(writerType)
-      writer.filterKeys(!_.equals("type")).foreach(kv => {
+      writer.filterKeys(!_.equals(Constant.FORMAT)).foreach(kv => {
         println(kv._1 + ": " + kv._2)
         conf.setWriteConf(kv._1, kv._2)
       })
@@ -50,7 +51,7 @@ object ConnectorClient {
       clazz
     })
 
-    val spark = SparkSession.builder().master("local").getOrCreate()
+    val spark = SparkSession.builder().getOrCreate()
 
     val job = new SparkPipelines(readerConnectors, writerConnectors, spark)
     job.runSparkJob()
