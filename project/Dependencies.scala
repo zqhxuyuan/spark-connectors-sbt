@@ -17,10 +17,11 @@ object Dependencies {
 
   val commonDependencies: Seq[ModuleID] = Seq(
     "junit" % "junit" % "4.12" % "test",
+    "org.scalatest" %% "scalatest" % "3.0.3" % "test",
     "com.google.guava" % "guava" % "19.0"
   )
 
-  def sparkDependency(_sparkVersion: String = sparkVersion): Seq[ModuleID] = Seq(
+  def sparkDependency(_sparkVersion: String = sparkVersion): Seq[ModuleID] = commonDependencies ++ Seq(
     "org.apache.spark" %% "spark-core" % _sparkVersion % compileMode,
     "org.apache.spark" %% "spark-sql" % _sparkVersion % compileMode
   )
@@ -30,7 +31,12 @@ object Dependencies {
 
   val coreDependencies       : Seq[ModuleID] = sparkDependency() ++ Seq(
     "com.typesafe" % "config" % "1.3.1",
-    "mrpowers" % "spark-daria" % "2.2.0_0.10.0"
+    "net.sf.json-lib" % "json-lib" % "2.4" classifier "jdk15",
+    "com.alibaba" % "fastjson" % "1.2.31",
+    "org.json4s" %% "json4s-core" % "3.5.3",
+    "org.json4s" %% "json4s-native" % "3.5.3",
+    "mrpowers" % "spark-daria" % "2.2.0_0.10.0",
+    "com.google.inject" % "guice" % "4.1.0"
   )
 
   val jdbcDependencies        : Seq[ModuleID] = sparkDependency() ++ Seq(

@@ -1,0 +1,46 @@
+{
+  "convert-multi-csv-to-json": {
+    "desc": "测试1",
+    "strategy": "spark",
+    "algorithm": [
+      {
+        "name": "testProcessor"
+      },
+      {
+        "name": "testProcessor"
+      }
+    ],
+    "ref": [
+      "convert-multi-csv-to-json2"
+    ],
+    "compositor": [
+      {
+        "name": "testCompositor"
+      },
+      {
+        "name": "testCompositor"
+      }
+    ],
+    "configParams": {
+      "k1": 1,
+      "k2": "2"
+    }
+  },
+  "convert-multi-csv-to-json2": {
+    "desc": "测试2",
+    "strategy": "spark",
+    "algorithm": [
+      {
+        "name": "testProcessor"
+      }
+    ],
+    "ref": [],
+    "compositor": [
+      {
+        "name": "testCompositor"
+      }
+    ],
+    "configParams": {
+    }
+  }
+}
