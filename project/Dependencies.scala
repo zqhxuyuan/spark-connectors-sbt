@@ -18,7 +18,9 @@ object Dependencies {
   val commonDependencies: Seq[ModuleID] = Seq(
     "junit" % "junit" % "4.12" % "test",
     "org.scalatest" %% "scalatest" % "3.0.3" % "test",
-    "com.google.guava" % "guava" % "19.0"
+    "com.google.guava" % "guava" % "19.0",
+    "org.apache.hadoop" % "hadoop-common" % "2.7.2",
+    "org.jodd" % "jodd-core" % "3.9"
   )
 
   def sparkDependency(_sparkVersion: String = sparkVersion): Seq[ModuleID] = commonDependencies ++ Seq(

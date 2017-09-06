@@ -43,6 +43,20 @@ class TestTypesafeConfig extends FlatSpec with Matchers{
     })
   }
 
+  "unwrap and instance" should "work" in {
+    val config = ConfigFactory.load("complex")
+    val complexStructure = config.getList("connectors").unwrapped().
+      asInstanceOf[java.util.List[java.util.Map[String, java.util.List[java.util.Map[String, String]]]]]
+
+    def java2scala(list: java.util.List[java.util.Map[String, java.util.List[java.util.Map[String, String]]]]) {
+      list.map(l => l.toList.map(m => m._1 -> m._2.toList.map(ll => ll.toMap)))
+    }
+
+    val complexMap = complexStructure(0)
+    println(complexMap)
+    assert(complexMap("readers")(0)("table").equals("test"))
+  }
+
   "Config and ConfigObject" should "json" in {
     // TODO how to convert json to Map[String, Map[String, Any]]
     val jobConfig = ConfigFactory.load("strategy.v2.json")

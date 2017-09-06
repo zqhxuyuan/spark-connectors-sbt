@@ -1,10 +1,9 @@
 package com.zqh.spark.connectors.classloader
 
-import java.io.File
-import java.net.URLClassLoader
+import java.net.{URL, URLClassLoader}
 
 import com.zqh.spark.connectors.{SparkWriter, ConnectorsWriteConf, ConnectorsReadConf, SparkReader}
-import org.apache.spark.SparkConf
+import org.apache.hadoop.conf.Configuration
 
 /**
   * Created by zhengqh on 17/8/31.
@@ -13,15 +12,37 @@ object ClassLoaderUtil {
 
   val packagePrefix = "com.zqh.spark.connectors."
 
-  def filesToURL(jarPath: List[String]) = jarPath.map(file => new File(file).toURI.toURL)
+  def hdfsSchema = new Configuration().get("fs.defaultFS") // hdfs://tdhdfs
 
-  def filesToClassLoader(jarPath: List[String]) = {
-    val urls = filesToURL(jarPath)
-    //val classloader = URLClassLoader.newInstance(urls.toArray, this.getClass.getClassLoader)
-    //val classloader = new URLClassLoader(urls.toArray, this.getClass.getClassLoader)
-    val classloader = new URLClassLoader(urls.toArray, Thread.currentThread().getContextClassLoader)
-    //val classloader = new PluginClassLoader(urls.toArray)
-    classloader
+  def fileFormat(path: String) = "file:" + path.replace("file:", "")
+  def jarFormat(path: String) = "jar:file:" + path.replace("file:", "") + "!/"
+  def localFileFormat(path: String) = path.replace("file:", "")
+  def hdfsFormat(path: String) = hdfsSchema + path.replace("file:", "")
+
+  def filesToURL(jarPath: List[String]) = jarPath.map(file => new URL(file))
+
+  /**
+    * 创建URLClassLoader有多种方式
+    *
+    * URLClassLoader.newInstance(urls.toArray, this.getClass.getClassLoader)
+    * new URLClassLoader(urls.toArray, this.getClass.getClassLoader)
+    * new PluginClassLoader(urls.toArray)
+    *
+    * @param jarPath 必须包含protocol, 比如本地文件是file://,HDFS是hdfs://
+    */
+  def newClassLoader(jarPath: List[String]) = {
+    new URLClassLoader(filesToURL(jarPath).toArray, Thread.currentThread().getContextClassLoader)
+  }
+
+  def addJarToClassPath(jarPath: List[String]): ClassLoader = {
+    val classLoader = newClassLoader(jarPath)
+    Thread.currentThread().setContextClassLoader(classLoader)
+    Thread.currentThread().getContextClassLoader
+  }
+
+  def loadClass(jarPath: List[String], className: String): Class[_] = {
+    val classLoader = newClassLoader(jarPath)
+    classLoader.loadClass(className)
   }
 
   def loadReaderClassFromFile(jarPath: List[String],
@@ -29,7 +50,7 @@ object ClassLoaderUtil {
                               connector: String,
                               className: String
                      ): SparkReader = {
-    val classLoader = filesToClassLoader(jarPath)
+    val classLoader = newClassLoader(jarPath)
     loadReaderClassFromClassLoader(classLoader, conf, connector, className)
   }
 
@@ -38,20 +59,8 @@ object ClassLoaderUtil {
                               connector: String,
                               className: String
                      ): SparkWriter = {
-    val classLoader = filesToClassLoader(jarPath)
+    val classLoader = newClassLoader(jarPath)
     loadWriterClassFromClassLoader(classLoader, conf, connector, className)
-  }
-
-  def addJarToClassPath(jarPath: List[String]) = {
-    val classLoader = filesToClassLoader(jarPath)
-    Thread.currentThread().setContextClassLoader(classLoader)
-    Thread.currentThread().getContextClassLoader
-  }
-
-  def loadClassFromJar(jarPath: List[String], className: String): Class[_] = {
-    val classLoader = filesToClassLoader(jarPath)
-    val clazz = classLoader.loadClass(className)
-    clazz
   }
 
   def loadReaderClassFromClassLoader(classLoader: ClassLoader,

@@ -17,6 +17,11 @@ import java.util.{Map => JMap, HashMap => HMap, List => JList, ArrayList => ALis
   */
 class StrategyDispatcher[T] {
 
+  final val STRATEGY = "strategy"
+  final val PROCESSOR = "processor"
+  final val ALGORITHM = "algorithm"
+  final val COMPOSITOR = "compositor"
+
   // jobName -> strategy
   private val _strategies = new HMap[String, Strategy[T]]()
   private val logger = LoggerFactory.getLogger(classOf[StrategyDispatcher[T]])
@@ -48,16 +53,18 @@ class StrategyDispatcher[T] {
     }
   }
 
-  // 读取配置
+  /**
+    * 读取配置
+    * 通过FastJSON或者Typesafe Config解析为java.util.Map[String, java.util.Map[String, Any]]
+    * 其中Any会再进一步在使用时, 通过asInstanceOf[]实例化为其他的类型, 比如List[Map[String, String]]等
+    */
   def loadConfig(configStr: String, format: String = "json") = {
-    val content = if(configStr == null) {
-      ConfigUtils.loadConfigFile2String("strategy.v2.json")
-    } else configStr
-
-    // TODO 通过FastJSON或者Typesafe Config解析为java.util.Map[String, java.util.Map[String, Any]]
-    // 其中Any会再进一步在使用时, 通过asInstanceOf实例化为其他的类型, 比如List[Map[String, String]]等
     _config = format match {
       case "json" =>
+        val content = if(configStr == null) {
+          ConfigUtils.loadConfigFile2String("strategy.v2.json")
+        } else configStr
+
         JSON.parse(content).asInstanceOf[JMap[String, JMap[String, Any]]]
       case "config" =>
         ConfigUtils.loadConfigInnerMap("strategy.v2.json")
