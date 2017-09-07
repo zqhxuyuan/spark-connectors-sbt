@@ -7,14 +7,6 @@ import org.apache.spark.sql.SparkSession
 
 /**
   * Created by zhengqh on 17/8/31.
-  *
-  bin/spark-submit --master local \
-  --driver-class-path /Users/zhengqh/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar \
-  --jars /Users/zhengqh/spark-connectors-sbt/jdbc/target/scala-2.11/jdbc-assembly-0.0.1.jar \
-  --class com.zqh.spark.connectors.ConnectorClient \
-  --files /Users/zhengqh/spark-connectors-sbt/core/src/main/resources/application.conf \
-  --driver-java-options -Dconfig.file=/Users/zhengqh/spark-connectors-sbt/core/src/main/resources/application.conf \
-  /Users/zhengqh/spark-connectors-sbt/core/target/scala-2.11/core-assembly-0.0.1.jar
   */
 object ConnectorClient {
 

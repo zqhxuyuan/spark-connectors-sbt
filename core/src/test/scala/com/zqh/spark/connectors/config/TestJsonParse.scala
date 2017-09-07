@@ -11,12 +11,22 @@ class TestJsonParse extends FlatSpec with Matchers{
 
   val configStr = ConfigUtils.loadConfigFile2String("strategy.v2.json")
 
-  "jons-lib" should "parse json" in {
-    import net.sf.json.JSONObject
-    val jSONObject = JSONObject.fromObject(configStr)
-    val map = jSONObject.asInstanceOf[java.util.Map[String, java.util.Map[_, _]]].toMap
-    println(map("convert-multi-csv-to-json2"))
-  }
+
+//    "json4s" should "json4s" in {
+//      import org.json4s._
+//      import org.json4s.native.JsonMethods._
+//      implicit val formats = org.json4s.DefaultFormats
+//
+//      val map = parse(configStr, true).values.asInstanceOf[Map[String, Map[String, Any]]]
+//      println(map("convert-multi-csv-to-json")("strategy"))
+//    }
+
+//  "jons-lib" should "parse json" in {
+//    import net.sf.json.JSONObject
+//    val jSONObject = JSONObject.fromObject(configStr)
+//    val map = jSONObject.asInstanceOf[java.util.Map[String, java.util.Map[_, _]]].toMap
+//    println(map("convert-multi-csv-to-json2"))
+//  }
 
   "fastjson" should "parse json" in {
     import com.alibaba.fastjson.JSON
@@ -37,12 +47,4 @@ class TestJsonParse extends FlatSpec with Matchers{
     println(configParams)
   }
 
-  "json4s" should "json4s" in {
-    import org.json4s._
-    import org.json4s.native.JsonMethods._
-    implicit val formats = org.json4s.DefaultFormats
-
-    val map = parse(configStr, true).values.asInstanceOf[Map[String, Map[String, Any]]]
-    println(map("convert-multi-csv-to-json")("strategy"))
-  }
 }

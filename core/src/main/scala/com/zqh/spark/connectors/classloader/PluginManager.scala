@@ -16,8 +16,14 @@ class PluginManager extends IPluginManager{
     try {
       val url = pluginName match {
         case p if(p.startsWith("hdfs")) =>
-          val fsUrlStreamHandlerFactory = new FsUrlStreamHandlerFactory()
-          URL.setURLStreamHandlerFactory(fsUrlStreamHandlerFactory)
+          try {
+            val fsUrlStreamHandlerFactory = new FsUrlStreamHandlerFactory()
+            URL.setURLStreamHandlerFactory(fsUrlStreamHandlerFactory)
+          } catch {
+            // java.lang.Error: factory already defined
+            case e: java.lang.Error => e.printStackTrace()
+            case e: Exception => e.printStackTrace()
+          }
           new Path(pluginName).toUri.toURL
         case p if(p.startsWith("/")) =>
           new File(pluginName).toURI.toURL

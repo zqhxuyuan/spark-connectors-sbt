@@ -9,6 +9,7 @@ import JdbcConfig._
 /**
   * Created by zhengqh on 17/8/29.
   */
+@deprecated
 class JdbcWriter(conf: SparkConf) extends SparkWriter{
 
   override def write(df: DataFrame) = {

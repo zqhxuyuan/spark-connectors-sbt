@@ -3,7 +3,6 @@ package com.zqh.spark.connectors.dispatcher
 import java.util.concurrent.atomic.AtomicReference
 import com.alibaba.fastjson.JSON
 import com.zqh.spark.connectors.config.ConfigUtils
-import net.sf.json.JSONObject
 import org.slf4j.LoggerFactory
 import scala.collection.JavaConversions._
 

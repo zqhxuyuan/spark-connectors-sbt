@@ -10,6 +10,7 @@ import JdbcConfig._
 /**
   * Created by zhengqh on 17/8/29.
   */
+@deprecated
 class JdbcReader(conf: SparkConf) extends SparkReader{
 
   override def read(spark: SparkSession): DataFrame = {

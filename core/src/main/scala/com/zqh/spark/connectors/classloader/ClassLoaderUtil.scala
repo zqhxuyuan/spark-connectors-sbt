@@ -68,7 +68,9 @@ object ClassLoaderUtil {
                                      connector: String,
                                      className: String
                                     ): SparkReader = {
-    val fullClassName = packagePrefix + s"$connector.$className"
+    val fullClassName = if(connector.equals("")) className
+    else packagePrefix + s"$connector.$className"
+
     val clazz = classLoader.loadClass(fullClassName)
     clazz.getConstructor(classOf[ConnectorsReadConf]).
       newInstance(conf).asInstanceOf[SparkReader]
@@ -79,9 +81,11 @@ object ClassLoaderUtil {
                                      connector: String,
                                      className: String
                                     ): SparkWriter = {
-    val fullClassName = packagePrefix + s"$connector.$className"
-    val clazz = classLoader.loadClass(fullClassName)
 
+    val fullClassName = if(connector.equals("")) className
+    else packagePrefix + s"$connector.$className"
+
+    val clazz = classLoader.loadClass(fullClassName)
     clazz.getConstructor(classOf[ConnectorsWriteConf]).
       newInstance(conf).asInstanceOf[SparkWriter]
   }

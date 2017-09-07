@@ -12,15 +12,21 @@ object Constant {
 
   val typeClassMap = Map(
     "reader.jdbc" -> "ReadJdbc",
-    "writer.jdbc" -> "WriteJdbc"
+    "writer.jdbc" -> "WriteJdbc",
+    "writer.codis" -> "CodisWriter"
   )
 
   /**
-    * com.zqh.spark.connectors.jdbc.ReadJdbc
     * @param connector jdbc
     * @param rw reader
-    * @return
+    * @return com.zqh.spark.connectors.jdbc.ReadJdbc
     */
   def getClassName(connector: String, rw: String) = packageName + connector + "." + typeClassMap(rw + "." + connector)
+
+  /**
+    * @param connectorAndMode reader.jdbc
+    * @return com.zqh.spark.connectors.jdbc.ReadJdbc
+    */
+  def getClassName(connectorAndMode: String) = packageName + typeClassMap(connectorAndMode)
 
 }

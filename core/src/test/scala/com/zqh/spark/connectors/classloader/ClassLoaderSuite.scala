@@ -4,9 +4,9 @@ import java.io.File
 import java.net.{URL, URLClassLoader}
 import java.sql.SQLException
 
-import com.zqh.spark.connectors.{SparkReader, ConnectorsReadConf}
+import com.zqh.spark.connectors.{NothingTransformer, SparkReader, ConnectorsReadConf}
 import com.zqh.spark.connectors.config.WriteConnectorConfig
-import com.zqh.spark.connectors.test.TestClass2
+import com.zqh.spark.connectors.test.{TestClassToLoader, TestSparkConnectors, TestClass2}
 import junit.framework.TestCase
 import org.apache.hadoop.conf.Configuration
 import org.apache.spark.SparkConf
@@ -18,6 +18,25 @@ import ClassConstant._
 
 class ClassLoaderSuite extends TestCase{
   val pluginManager = new PluginManager
+
+  def testClassLoad(): Unit = {
+    val clazz = ClassLoaderUtil.loadClass(List(apiJarPath), "com.zqh.spark.connectors.test.TestClass")
+    val instance = clazz.newInstance.asInstanceOf[TestClassToLoader]
+    instance.method()
+
+    // 最原始的做法
+    val classLoader = new URLClassLoader(Array(new URL(jdbcJarPath)), Thread.currentThread().getContextClassLoader)
+    classLoader.loadClass("com.zqh.spark.connectors.jdbc.ReadJdbc")
+
+    // 封装的做法
+    val pluginClassLoader = new PluginClassLoader(Array(new URL(jdbcJarPath)))
+    pluginClassLoader.loadClass("com.zqh.spark.connectors.jdbc.ReadJdbc")
+
+    // 更进一步的封装
+    ClassLoaderUtil.loadReaderClassFromFile(List(jdbcJarPath), jdbcReadConf, "jdbc", "ReadJdbc")
+
+    ClassLoaderUtil.loadReaderClassFromFile(List(cassJarPath), cassandraReadConf, "cassandra", "CassandraReader")
+  }
 
   // 通过new File(filePath).toURI.toURL中的filePath不能有file:
   // 而如果是new URL(filePath), 则必须带file:. 建议使用new URL
@@ -131,8 +150,10 @@ class ClassLoaderSuite extends TestCase{
   }
 
   // TODO How to resolve dependency jar, such as jdbc driver
+  /*
   def testLoadHdfsJarAndExecuteJob(): Unit = {
     val jdbcJar = hdfsFormat("/user/pontus/jdbc-assembly-0.0.1.jar")
+    spark.sparkContext.addJar(jdbcJar)
 
     pluginManager.loadPlugin(jdbcJar)
     val classLoader = pluginManager.getLoader(jdbcJar)
@@ -140,21 +161,28 @@ class ClassLoaderSuite extends TestCase{
     val clazz = classLoader.loadClass(jdbcClassName)
     val reader = clazz.getConstructor(classOf[ConnectorsReadConf]).newInstance(jdbcReadConf).asInstanceOf[SparkReader]
 
-    spark.sparkContext.addJar(jdbcJar)
-    reader.read(spark)
+    try {
+      reader.read(spark)
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
   }
 
   def testHdfsJar(): Unit = {
     val jdbcJar = hdfsFormat("/user/pontus/jdbc-assembly-0.0.1.jar")
-    //jdbcReadConf.setJars(List(jdbc))
-    //jdbcReadConf.set("spark.jars", List(jdbc).mkString(","))
-    //jdbcReadConf.set("--jars", List(jdbc).mkString(","))
-
     val reader = ClassLoaderUtil.loadReaderClassFromFile(List(jdbcJar), jdbcReadConf, "jdbc", "ReadJdbc")
-
-    spark.sparkContext.addJar(jdbcJar)
-
     reader.read(spark)
   }
 
+  def testCodis() = {
+    pluginManager.loadPlugin(apiJarPath)
+    pluginManager.loadPlugin(codisJarPath)
+
+    val reader = ClassLoaderUtil.loadReaderClassFromFile(List(codisJarPath), testCodisReadConf, "", "com.zqh.spark.connectors.test.TestCodisReader")
+    val writer = ClassLoaderUtil.loadWriterClassFromFile(List(codisJarPath), codisWriteConf, "codis", "CodisWriter")
+    val transformer = new NothingTransformer
+    val connector = new TestSparkConnectors(reader, writer, transformer, spark)
+    connector.runSparkJob()
+  }
+  */
 }

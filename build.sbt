@@ -45,21 +45,24 @@ assemblyShadeRules in assembly := Seq(
   ShadeRule.rename("io.netty.util.**" -> "shadeio.io.netty.util.@1").inAll,
   ShadeRule.rename("io.netty.bootstrap.**" -> "shadeio.io.netty.bootstrap.@1").inAll,
   ShadeRule.rename("com.google.common.**" -> "shade.com.google.common.@1").inAll,
-  ShadeRule.rename("com.google.protobuf.**" -> "shade.com.google.protobuf.@1").inAll
+  ShadeRule.rename("com.google.protobuf.**" -> "shade.com.google.protobuf.@1").inAll,
+  ShadeRule.rename("org.apache.commons.collections.**" -> "shade.org.apache.commons.collections.@1").inAll
 )
 
 val meta = """META.INF(.)*""".r
 assemblyMergeStrategy in assembly := {
   case PathList("org", "apache", "spark", "unused", "UnusedStubClass.class") => MergeStrategy.discard
+  case PathList("org", "apache", "commons", "collections", xs @ _*) => MergeStrategy.last
+  case PathList("commons-collections", xs @ _*) => MergeStrategy.last
+  case PathList("commons-beanutils", xs @ _*) => MergeStrategy.last
   case PathList("javax", "servlet", xs @ _*) => MergeStrategy.first
   case PathList(ps @ _*) if ps.last endsWith ".html" => MergeStrategy.first
   case n if n.startsWith("reference.conf") => MergeStrategy.concat
   case n if n.endsWith(".conf") => MergeStrategy.concat
   case meta(_) => MergeStrategy.discard
-  case x => MergeStrategy.first
+  case x => // MergeStrategy.first
+    val oldStrategy = (assemblyMergeStrategy in assembly).value
+    oldStrategy(x)
 }
 
-//mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) => {
-//  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-//  case x => MergeStrategy.first
-//}}
+test in assembly := {}

@@ -1,11 +1,11 @@
 package com.zqh.spark.connectors.classloader
 
-import java.net.{URL, JarURLConnection, URLConnection}
+import java.net.{URLClassLoader, URL, JarURLConnection, URLConnection}
 
 import sun.net.www.protocol.file.FileURLConnection
 
 import scala.collection.mutable
-import scala.reflect.internal.util.ScalaClassLoader.URLClassLoader
+//import scala.reflect.internal.util.ScalaClassLoader.URLClassLoader
 
 /**
   * Created by zhengqh on 17/9/6.
@@ -25,7 +25,7 @@ class PluginClassLoader(url: Array[URL], classLoader: ClassLoader) extends URLCl
 
   def addURLFile(file: URL) {
     try {
-      val uc = file.openConnection
+      val uc: URLConnection = file.openConnection
       if (uc.isInstanceOf[JarURLConnection]) {
         println(s"CACHING ${file.getProtocol.toUpperCase()} | ${file}")
         uc.setUseCaches(true)
@@ -38,6 +38,7 @@ class PluginClassLoader(url: Array[URL], classLoader: ClassLoader) extends URLCl
         val jar = uc.asInstanceOf[FileURLConnection]
         cachedFileJar += jar
       }
+      //TODO HDFS FsUrlConnection
       //else if(uc.isInstanceOf[FsUrlConnection]) {}
     } catch {
       case e: Exception => System.err.println("Failed to cache plugin JAR file: " + file.toExternalForm)

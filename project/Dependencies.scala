@@ -12,15 +12,20 @@ object Dependencies {
   excludeDependencies ++= Seq(
     SbtExclusionRule("org.slf4j", "slf4j-simple"),
     SbtExclusionRule("org.slf4j", "slf4j-api"),
-    SbtExclusionRule("org.slf4j", "slf4j-jdk12")
+    SbtExclusionRule("org.slf4j", "slf4j-jdk12"),
+    SbtExclusionRule("commons-beanutils", "commons-beanutils-core"),
+    SbtExclusionRule("commons-collections", "commons-collections"),
+    SbtExclusionRule("commons-logging", "commons-logging"),
+    SbtExclusionRule("org.slf4j", "slf4j-log4j12"),
+    SbtExclusionRule("org.hamcrest", "hamcrest-core"),
+    SbtExclusionRule("junit", "junit"),
+    SbtExclusionRule("org.jboss.netty", "netty")
   )
 
   val commonDependencies: Seq[ModuleID] = Seq(
     "junit" % "junit" % "4.12" % "test",
     "org.scalatest" %% "scalatest" % "3.0.3" % "test",
-    "com.google.guava" % "guava" % "19.0",
-    "org.apache.hadoop" % "hadoop-common" % "2.7.2",
-    "org.jodd" % "jodd-core" % "3.9"
+    "com.google.guava" % "guava" % "19.0"
   )
 
   def sparkDependency(_sparkVersion: String = sparkVersion): Seq[ModuleID] = commonDependencies ++ Seq(
@@ -33,11 +38,7 @@ object Dependencies {
 
   val coreDependencies       : Seq[ModuleID] = sparkDependency() ++ Seq(
     "com.typesafe" % "config" % "1.3.1",
-    "net.sf.json-lib" % "json-lib" % "2.4" classifier "jdk15",
     "com.alibaba" % "fastjson" % "1.2.31",
-    "org.json4s" %% "json4s-core" % "3.5.3",
-    "org.json4s" %% "json4s-native" % "3.5.3",
-    "mrpowers" % "spark-daria" % "2.2.0_0.10.0",
     "com.google.inject" % "guice" % "4.1.0"
   )
 

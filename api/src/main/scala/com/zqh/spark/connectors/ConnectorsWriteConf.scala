@@ -14,7 +14,5 @@ class ConnectorsWriteConf(connector: String) extends SparkConf{
     this
   }
 
-  def getWriteConf(key: String) = this.get(prefix + key)
-
-  def getWriteConf(key: String, default: String) = this.get(prefix + key, default)
+  def getWriteConf(key: String, default: String = "") = this.get(prefix + key, default)
 }
