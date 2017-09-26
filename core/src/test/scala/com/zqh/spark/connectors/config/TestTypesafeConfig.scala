@@ -1,7 +1,6 @@
 package com.zqh.spark.connectors.config
 
 import com.typesafe.config.{ConfigValue, ConfigFactory}
-import com.zqh.spark.connectors.ConnectorsReadConf
 import com.zqh.spark.connectors.util.Constant
 import scala.collection.JavaConversions._
 

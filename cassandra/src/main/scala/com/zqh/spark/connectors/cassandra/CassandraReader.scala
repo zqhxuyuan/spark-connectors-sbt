@@ -1,11 +1,13 @@
 package com.zqh.spark.connectors.cassandra
 
-import com.zqh.spark.connectors.{ConnectorsReadConf, SparkReader}
+import com.zqh.spark.connectors.SparkReader
+import com.zqh.spark.connectors.config.ConnectorsReadConf
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**
   * Created by zhengqh on 17/8/29.
   */
+@deprecated
 class CassandraReader(conf: ConnectorsReadConf) extends SparkReader{
 
   override def init(spark: SparkSession) = {

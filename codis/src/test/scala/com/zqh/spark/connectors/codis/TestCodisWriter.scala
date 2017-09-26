@@ -1,6 +1,7 @@
 package com.zqh.spark.connectors.codis
 
-import com.zqh.spark.connectors.{ConnectorsReadConf, NothingTransformer, ConnectorsWriteConf}
+import com.zqh.spark.connectors.config.{ConnectorsWriteConf, ConnectorsReadConf}
+import com.zqh.spark.connectors.NothingTransformer
 import com.zqh.spark.connectors.test.{TestCodisReader, TestSparkConnectors, TestSparkReaderUser}
 import org.apache.spark.sql.SparkSession
 

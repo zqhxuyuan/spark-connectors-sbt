@@ -1,5 +1,6 @@
-package com.zqh.spark.connectors.codis
+package org.apache.spark.sql.codis
 
+import com.zqh.spark.connectors.ConnectorParameters
 import io.codis.jodis.{JedisResourcePool, RoundRobinJedisPool}
 import org.apache.spark.sql.sources._
 import org.apache.spark.sql.types.StructType
@@ -26,14 +27,15 @@ class DefaultSource extends DataSourceRegister
                               saveMode:   SaveMode,
                               parameters: Map[String, String],
                               dataframe:  DataFrame): BaseRelation = {
-    val zkHost = parameters("zkHost")
-    val zkTimeout = parameters.getOrElse("zkTimeout", "30000").toInt
-    val zkProxyDir = parameters("zkDir")
-    val password = parameters("password")
-    val filter = parameters.getOrElse("filter", "")
-    val ttl = parameters.getOrElse("ttl", "")
-    val prefix = parameters.getOrElse("prefix", "")
-    val operator = parameters("command")
+    import ConnectorParameters.Codis._
+    val zkHost = parameters(codisZkHost)
+    val zkTimeout = parameters.getOrElse(codisZkTimeout, "30000").toInt
+    val zkProxyDir = parameters(codisZkDir)
+    val password = parameters(codisPassword)
+    val filter = parameters.getOrElse(codisFilter, "")
+    val ttl = parameters.getOrElse(codisFilter, "")
+    val prefix = parameters.getOrElse(codisPrefix, "")
+    val operator = parameters(codisCommand)
 
     dataframe.foreachPartition(rows=>{
       val jedisPool: JedisResourcePool = RoundRobinJedisPool.create.curatorClient(zkHost, zkTimeout).zkProxyDir(zkProxyDir).build

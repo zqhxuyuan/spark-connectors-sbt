@@ -2,7 +2,8 @@ package com.zqh.spark.connectors.classloader
 
 import java.net.{URL, URLClassLoader}
 
-import com.zqh.spark.connectors.{SparkWriter, ConnectorsWriteConf, ConnectorsReadConf, SparkReader}
+import com.zqh.spark.connectors.config.{ConnectorsWriteConf, ConnectorsReadConf}
+import com.zqh.spark.connectors.{SparkWriter, SparkReader}
 import org.apache.hadoop.conf.Configuration
 
 /**

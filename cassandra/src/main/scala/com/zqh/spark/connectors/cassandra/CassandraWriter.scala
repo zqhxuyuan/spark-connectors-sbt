@@ -1,11 +1,13 @@
 package com.zqh.spark.connectors.cassandra
 
-import com.zqh.spark.connectors.{ConnectorsWriteConf, SparkWriter}
+import com.zqh.spark.connectors.SparkWriter
+import com.zqh.spark.connectors.config.ConnectorsWriteConf
 import org.apache.spark.sql.DataFrame
 
 /**
   * Created by zhengqh on 17/8/29.
   */
+@deprecated
 class CassandraWriter(conf: ConnectorsWriteConf) extends SparkWriter{
 
   override def write(df: DataFrame) = {

@@ -1,6 +1,7 @@
 package com.zqh.spark.connectors.codis
 
-import com.zqh.spark.connectors.{ConnectorsWriteConf, SparkWriter}
+import com.zqh.spark.connectors.SparkWriter
+import com.zqh.spark.connectors.config.ConnectorsWriteConf
 import org.apache.spark.sql.DataFrame
 
 /**
@@ -9,20 +10,22 @@ import org.apache.spark.sql.DataFrame
 class CodisWriter(conf: ConnectorsWriteConf) extends SparkWriter{
 
   override def write(df: DataFrame) = {
-    val zkHost = conf.getWriteConf("zkHost")
-    val zkDir = conf.getWriteConf("zkDir")
-    val password = conf.getWriteConf("password")
-    val filter = conf.getWriteConf("filter")
-    val ttl = conf.getWriteConf("ttl")
-    val command = conf.getWriteConf("command")
+    import com.zqh.spark.connectors.ConnectorParameters.Codis._
+
+    val zkHost = conf.getWriteConf(codisZkHost)
+    val zkDir = conf.getWriteConf(codisZkDir)
+    val password = conf.getWriteConf(codisPassword)
+    val filter = conf.getWriteConf(codisFilter)
+    val ttl = conf.getWriteConf(codisTTL)
+    val command = conf.getWriteConf(codisCommand)
 
     var configMap = Map(
-      "zkHost" -> zkHost,
-      "zkDir" -> zkDir,
-      "password" -> password,
-      "filter" -> filter,
-      "ttl" -> ttl,
-      "command" -> command
+      codisZkHost -> zkHost,
+      codisZkDir -> zkDir,
+      codisPassword -> password,
+      codisFilter -> filter,
+      codisTTL -> ttl,
+      codisCommand -> command
     )
 
     df.write.format("com.zqh.spark.connectors.codis")

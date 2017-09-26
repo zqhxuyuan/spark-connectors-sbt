@@ -1,6 +1,6 @@
 package com.zqh.spark.connectors.jdbc
 
-import com.zqh.spark.connectors.{ReadConnectorType, WriteConnectorType}
+import com.zqh.spark.connectors.format.{WriteConnectorType, ReadConnectorType}
 import org.apache.spark.SparkConf
 
 /**

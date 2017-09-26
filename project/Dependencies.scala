@@ -93,7 +93,18 @@ object Dependencies {
 
   )
 
-  val kafkaDependencies    : Seq[ModuleID] = sparkDependency() ++ Seq(
+  val kafkaDependencies       : Seq[ModuleID] = sparkDependency() ++ Seq(
+    "org.apache.spark" %% "spark-streaming" % sparkVersion % compileMode
+
+  )
+
+  val kafka08Dependencies     : Seq[ModuleID] = sparkDependency() ++ Seq(
+    "org.apache.spark" %% "spark-streaming" % sparkVersion % compileMode
+
+  )
+
+  val streamingDependencies   : Seq[ModuleID] = sparkDependency() ++ Seq(
+    "org.apache.spark" %% "spark-streaming" % sparkVersion % compileMode
 
   )
 

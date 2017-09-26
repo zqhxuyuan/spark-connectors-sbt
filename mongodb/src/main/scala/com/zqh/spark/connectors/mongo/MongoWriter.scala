@@ -1,6 +1,7 @@
 package com.zqh.spark.connectors.mongo
 
-import com.zqh.spark.connectors.{ConnectorsWriteConf, SparkWriter}
+import com.zqh.spark.connectors.SparkWriter
+import com.zqh.spark.connectors.config.ConnectorsWriteConf
 import org.apache.spark.sql.{DataFrame}
 
 /**

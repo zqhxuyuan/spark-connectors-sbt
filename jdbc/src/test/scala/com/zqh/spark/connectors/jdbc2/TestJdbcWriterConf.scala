@@ -1,7 +1,8 @@
 package com.zqh.spark.connectors.jdbc2
 
+import com.zqh.spark.connectors.config.ConnectorsWriteConf
 import com.zqh.spark.connectors.jdbc.WriteJdbc
-import com.zqh.spark.connectors.{NothingTransformer, ConnectorsWriteConf}
+import com.zqh.spark.connectors.NothingTransformer
 import com.zqh.spark.connectors.test.{TestSparkConnectors, TestSparkReader2}
 import org.apache.spark.sql.SparkSession
 

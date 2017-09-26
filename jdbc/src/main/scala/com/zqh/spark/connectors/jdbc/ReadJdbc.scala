@@ -2,12 +2,14 @@ package com.zqh.spark.connectors.jdbc
 
 import java.util.Properties
 
-import com.zqh.spark.connectors.{ConnectorsReadConf, SparkReader}
+import com.zqh.spark.connectors.SparkReader
+import com.zqh.spark.connectors.config.ConnectorsReadConf
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**
   * Created by zhengqh on 17/8/29.
   */
+@deprecated
 class ReadJdbc(conf: ConnectorsReadConf) extends SparkReader{
 
   override def init(spark: SparkSession) = {

@@ -1,6 +1,7 @@
 package com.zqh.spark.connectors.mongo
 
-import com.zqh.spark.connectors.{ReadConnectorType, WriteConnectorType}
+import com.zqh.spark.connectors.WriteConnectorType
+import com.zqh.spark.connectors.format.{WriteConnectorType, ReadConnectorType}
 import org.apache.spark.SparkConf
 
 /**

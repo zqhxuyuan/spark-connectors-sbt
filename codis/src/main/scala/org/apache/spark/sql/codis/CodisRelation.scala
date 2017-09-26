@@ -1,4 +1,4 @@
-package com.zqh.spark.connectors.codis
+package org.apache.spark.sql.codis
 
 import org.apache.spark.sql.sources.BaseRelation
 import org.apache.spark.sql.types.StructType

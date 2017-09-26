@@ -1,21 +1,9 @@
 package com.zqh.spark.connectors.test
 
-import com.zqh.spark.connectors.{ConnectorsReadConf, SparkReader}
+import com.zqh.spark.connectors.SparkReader
+import com.zqh.spark.connectors.config.ConnectorsReadConf
 import org.apache.spark.sql.SparkSession
 
-
-/**
-  * Created by zhengqh on 17/8/31.
-  *
-  * 1. sbt cassandra/assembly -Denv=provided
-  * 2. sbt core/assembly -Denv=provided
-  * 3. run spark-submit
-  *
-  bin/spark-submit \
-  --jars /Users/zhengqh/spark-connectors-sbt/cassandra/target/scala-2.11/cassandra-assembly-0.0.1.jar \
-  --class com.zqh.spark.connectors.test.TestCassandraBySparkJars \
-  /Users/zhengqh/spark-connectors-sbt/core/target/scala-2.11/core-assembly-0.0.1.jar
-  */
 object TestCassandraBySparkJars {
 
   def main(args: Array[String]) {

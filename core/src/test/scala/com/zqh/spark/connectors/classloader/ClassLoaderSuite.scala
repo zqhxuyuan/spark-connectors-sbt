@@ -4,8 +4,8 @@ import java.io.File
 import java.net.{URL, URLClassLoader}
 import java.sql.SQLException
 
-import com.zqh.spark.connectors.{NothingTransformer, SparkReader, ConnectorsReadConf}
-import com.zqh.spark.connectors.config.WriteConnectorConfig
+import com.zqh.spark.connectors.{NothingTransformer, SparkReader}
+import com.zqh.spark.connectors.config.{ConnectorsWriteConf, ConnectorsReadConf}
 import com.zqh.spark.connectors.test.{TestClassToLoader, TestSparkConnectors, TestClass2}
 import junit.framework.TestCase
 import org.apache.hadoop.conf.Configuration
@@ -107,7 +107,7 @@ class ClassLoaderSuite extends TestCase{
     val conf = new SparkConf().set("write.jdbc.test", "Test")
     val config = Class.forName(writeConnectorClass, true, classLoader)
       .getConstructor(classOf[String], classOf[SparkConf])
-      .newInstance("jdbc", conf).asInstanceOf[WriteConnectorConfig]
+      .newInstance("jdbc", conf).asInstanceOf[ConnectorsWriteConf]
 
     assert(config.getWriteConf("test").equals("Test"))
 

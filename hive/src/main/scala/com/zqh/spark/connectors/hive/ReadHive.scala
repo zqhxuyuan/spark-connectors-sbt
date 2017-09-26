@@ -1,6 +1,7 @@
 package com.zqh.spark.connectors.hive
 
-import com.zqh.spark.connectors.{ConnectorsReadConf, SparkReader}
+import com.zqh.spark.connectors.SparkReader
+import com.zqh.spark.connectors.config.ConnectorsReadConf
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**

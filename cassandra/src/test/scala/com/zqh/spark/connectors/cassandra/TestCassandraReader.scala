@@ -1,6 +1,7 @@
 package com.zqh.spark.connectors.cassandra
 
-import com.zqh.spark.connectors.{NothingTransformer, ConnectorsReadConf}
+import com.zqh.spark.connectors.NothingTransformer
+import com.zqh.spark.connectors.config.ConnectorsReadConf
 import com.zqh.spark.connectors.test.{TestSparkConnectors, ConsoleSparkWriter}
 import org.apache.spark.sql.SparkSession
 

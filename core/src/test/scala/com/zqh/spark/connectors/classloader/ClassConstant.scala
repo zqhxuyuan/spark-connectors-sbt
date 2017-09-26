@@ -1,7 +1,8 @@
 package com.zqh.spark.connectors.classloader
 
-import com.zqh.spark.connectors.{ConnectorsWriteConf, ConnectorsReadConf}
+import com.zqh.spark.connectors.config.ConnectorsWriteConf
 import com.zqh.spark.connectors.classloader.ClassLoaderUtil._
+import com.zqh.spark.connectors.config.{ConnectorsWriteConf, ConnectorsReadConf}
 import org.apache.spark.sql.SparkSession
 
 /**

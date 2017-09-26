@@ -1,6 +1,6 @@
 package com.zqh.spark.connectors
 
-import com.zqh.spark.connectors.config.ConfigUtils
+import com.zqh.spark.connectors.config.{ConnectorsWriteConf, ConnectorsReadConf, ConfigUtils}
 import com.zqh.spark.connectors.core.SparkPipelines
 import com.zqh.spark.connectors.util.Constant
 import org.apache.spark.sql.SparkSession
@@ -8,6 +8,7 @@ import org.apache.spark.sql.SparkSession
 /**
   * Created by zhengqh on 17/8/31.
   */
+@deprecated
 object ConnectorClient {
 
   def main(args: Array[String]) {

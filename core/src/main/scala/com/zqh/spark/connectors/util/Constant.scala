@@ -10,23 +10,20 @@ object Constant {
   final val WRITER = "writer"
   final val FORMAT = "format"
 
-  val typeClassMap = Map(
-    "reader.jdbc" -> "ReadJdbc",
-    "writer.jdbc" -> "WriteJdbc",
-    "writer.codis" -> "CodisWriter"
+  final val DATAFRAME_READER = "org.zqh.spark.connectors.dataframe.DFReader"
+  final val DATAFRAME_WRITER = "org.zqh.spark.connectors.dataframe.DFWriter"
+
+  val classNameMapping = Map[String, String](
+    "reader.codis" -> "org.zqh.spark.connectors.dataframe.DFReader"
   )
 
-  /**
-    * @param connector jdbc
-    * @param rw reader
-    * @return com.zqh.spark.connectors.jdbc.ReadJdbc
-    */
-  def getClassName(connector: String, rw: String) = packageName + connector + "." + typeClassMap(rw + "." + connector)
-
-  /**
-    * @param connectorAndMode reader.jdbc
-    * @return com.zqh.spark.connectors.jdbc.ReadJdbc
-    */
-  def getClassName(connectorAndMode: String) = packageName + typeClassMap(connectorAndMode)
-
+  def getClassName(rw: String, connector: String) =
+    classNameMapping.get(rw + "." + connector) match {
+      case Some(className) => className
+      case None =>
+        rw match {
+          case READER => DATAFRAME_READER
+          case WRITER => DATAFRAME_WRITER
+        }
+    }
 }

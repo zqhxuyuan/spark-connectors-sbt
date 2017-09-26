@@ -36,6 +36,10 @@ lazy val orientdb = (project in file("orientdb")).settings(Common.settings: _*).
 
 lazy val kafka = (project in file("kafka")).settings(Common.settings: _*).settings(libraryDependencies ++= kafkaDependencies).dependsOn(api)
 
+lazy val kafka08 = (project in file("kafka08")).settings(Common.settings: _*).settings(libraryDependencies ++= kafka08Dependencies).dependsOn(api)
+
+lazy val streaming = (project in file("streaming")).settings(Common.settings: _*).settings(libraryDependencies ++= streamingDependencies).dependsOn(api)
+
 lazy val root = (project in file(".")).settings(Common.settings: _*).
   aggregate(api, core, jdbc, hdfs, hive, cassandra, hbase, mongodb, codis, redis, elasticsearch)
 

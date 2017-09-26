@@ -2,7 +2,8 @@ package com.zqh.spark.connectors.hive
 
 import java.util.Properties
 
-import com.zqh.spark.connectors.{ConnectorsWriteConf, SparkWriter}
+import com.zqh.spark.connectors.SparkWriter
+import com.zqh.spark.connectors.config.ConnectorsWriteConf
 import org.apache.spark.sql.{DataFrame}
 /**
   * Created by zhengqh on 17/8/29.
